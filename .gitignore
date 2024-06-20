@@ -16,9 +16,6 @@ dist-ssr
 config.json
 keys/
 
-# Ignorar arquivos .env
-.env
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
