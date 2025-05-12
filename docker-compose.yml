@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./keys:/app/keys
+    depends_on:
+      - db
+    networks:
+      - sudoku-net
+
+  frontend:
+    build: 
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:5000
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - sudoku-net
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sudoku
+    ports:
+      - "5432:5432"
+    networks:
+      - sudoku-net
+    
+networks:
+  sudoku-net:
+    driver: bridge
