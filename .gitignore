@@ -19,7 +19,7 @@ dist-ssr
 server/keys/
 *.key
 *.pem
-config.json
+server/src/config/config.json
 
 # IDEs / editores
 .vscode/*
