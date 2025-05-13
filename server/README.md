@@ -18,7 +18,7 @@ cd sudoku-app
 - Crie a pasta `server/keys/`
 - Coloque `private.key` e `public.key` dentro dessa pasta
 
-3. **Configure o arquivo `config.json` com suas credenciais de banco de dados.**
+3. **Configure o arquivo `config.json` na pasta `server/src/config` com suas credenciais de banco de dados.**
 ```json
 {
   "development": {
