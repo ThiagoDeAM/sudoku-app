@@ -1,182 +1,105 @@
+# Sudoku App - Docker Edition
 
-# Sudoku API
-
-Esta é a documentação para a API do jogo de Sudoku, construída com Node.js, Express e Sequelize.
-
-## Endpoints
-
-### Registro de Usuário
-
-#### POST `/api/users/register`
-
-Cadastra um novo usuário.
-
-**Parâmetros do Corpo da Requisição:**
-
-```json
-{
-  "username": "usuário",
-  "email": "usuario@example.com",
-  "password": "senha123"
-}
-```
-**Respostas Possíveis:**
-
-* `201 Created`: Usuário registrado com sucesso.
-* `400 Bad Request`: Dados inválidos ou usuário já existe.
-* `500 Internal Server Error`: Erro ao registrar usuário.
-
-**Exemplo de Requisição:**
-```bash
-curl -X POST http://localhost:3001/api/users/register -H "Content-Type: application/json" -d '{
-  "username": "usuário",
-  "email": "usuario@example.com",
-  "password": "senha123"
-}'
-```
-
-### Login de Usuário
-#### `POST /api/users/login`
-
-Autentica um usuário e retorna um token JWT.
-
-**Parâmetros do Corpo da Requisição:**
-```json
-{
-  "email": "usuario@example.com",
-  "password": "senha123"
-}
-```
-
-**Respostas Possíveis:**
-
-* `200 OK`: Login bem-sucedido.
-* `401 Unauthorized`: Senha incorreta.
-* `404 Not Found`: Usuário não encontrado.
-* `500 Internal Server Error`: Erro ao realizar login.
-
-**Exemplo de Requisição:**
-```bash
-curl -X POST http://localhost:3001/api/users/login -H "Content-Type: application/json" -d '{
-  "email": "usuario@example.com",
-  "password": "senha123"
-}'
-```
-
-### Registro de Tempo de Conclusão
-#### `POST /api/games/complete`
-
-Registra o tempo de conclusão de um jogo.
-
-**Parâmetros do Corpo da Requisição:**
-```json
-{
-  "completionTime": 120
-}
-```
-**Respostas Possíveis:**
-
-* `201 Created`: Tempo registrado com sucesso.
-* `500 Internal Server Error`: Erro ao registrar o tempo.
-
-**Exemplo de Requisição:**
-
-```bash
-curl -X POST http://localhost:3001/api/games/complete -H "Content-Type: application/json" -H "Authorization: Bearer <token>" -d '{
-  "completionTime": 120
-}'
-```
-
-### Ranking
-#### `GET /api/games/ranking`
-Retorna o ranking dos jogadores baseado no tempo de conclusão.
-
-**Requisição:**
-```bash
-curl -X GET http://localhost:3001/api/games/ranking -H "Authorization: Bearer <token>"
-```
-**Respostas Possíveis:**
-
-* `200 OK`: Ranking retornado com sucesso.
-* `500 Internal Server Error`: Erro ao obter o ranking.
-
-### Histórico de Jogos
-#### `GET /api/users/user-games`
-
-Retorna o histórico de jogos de um usuário específico.
-
-**Requisição:**
-```bash
-curl -X GET http://localhost:3001/api/users/user-games -H "Authorization: Bearer <token>"
-```
-
-**Respostas Possíveis:**
-
-* `200 OK`: Histórico de jogos retornado com sucesso.
-* `500 Internal Server Error`: Erro ao obter o histórico de jogos.
-
-## Autenticação
-Os endpoints protegidos requerem um token JWT para autenticação. O token deve ser incluído no cabeçalho da requisição como Authorization: Bearer <token>.
-
-**Exemplo de Cabeçalho de Autenticação:**
-```makefile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-## Instalação e Execução
+Aplicativo completo de Sudoku com frontend em React, backend em Express/Node.js e banco de dados PostgreSQL, totalmente dockerizado.
+ 
 ### Pré-requisitos
-* Node.js
-* PostgreSQL
-### Configuração
-1. Clone o repositório:
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### :whale: Como Executar a Aplicação com Docker
+
+1. **Clone o repositório:**
 ```bash
 git clone https://github.com/ThiagoDeAM/sudoku-app.git
-cd sudoku-api
+cd sudoku-app
 ```
-2. Instale as dependências:
-```bash
-npm install
-```
-3. Configure o arquivo `config.json` com suas credenciais de banco de dados.
 
+2. **Crie os arquivos de chave JWT (se ainda não existirem)**
+- Crie a pasta server/keys/
+- Coloque private.key e public.key dentro dessa pasta
+
+3. **Configure o arquivo `config.json` com suas credenciais de banco de dados.**
 ```json
 {
   "development": {
-    "username": "username",
-    "password": "password",
-    "database": "database",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
-  "test": {
-    "username": "username",
-    "password": "password",
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
-  "production": {
-    "username": "username",
-    "password": "password",
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "sudoku",
+    "host": "db",
     "dialect": "postgres"
   }
 }
 ```
 
-
-4. Insira as suas chaves JWT `public.key` e `private.key` na pasta `/keys`
-
-5. Execute as migrações do banco de dados:
+4. **Execute o Docker Compose**
 ```bash
+docker-compose up --build
+```
+
+4. **Rode as migrations do Sequelize (apenas na primeira execução)**
+```bash
+docker-compose exec backend sh
+ln -s src/config config
+ln -s src/migrations migrations
 npx sequelize-cli db:migrate
 ```
 
-6. Inicie o servidor:
-```bash
-npm run dev
+Importante: Essas migrations só precisam ser executadas uma vez para criar as tabelas no banco de dados.
+
+5. **Acesse no navegador:**
+- Frontend (React): http://localhost:3000
+- Backend (API): http://localhost:5000
+
+**:file_folder: Estrutura do Projeto**
+```json
+Sudoku/
+├── frontend/        # React + Vite
+│   ├── src/
+│   ├── Dockerfile
+│   └── .env       # VITE_API_URL=http://localhost:5000
+│
+├── server/          # Node.js + Express + Sequelize
+│   ├── src/
+│   │   ├── config/      # config.json do Sequelize
+│   │   ├── controllers/
+│   │   ├── migrations/  # Migrations do banco
+│   │   ├── models/
+│   │   ├── routes/
+│   ├── Dockerfile
+│   └── server.js
+│
+├── docker-compose.yml
 ```
-O servidor estará em execução em `http://localhost:3001`.
+
+**:hammer: Variáveis de Ambiente**
+`frontend/.env`
+```json
+VITE_API_URL=http://localhost:5000
+```
+
+**Explicação dos Arquivos Docker**
+`DockerFile`
+Define como cada imagem do contêiner será montada. Foram utilizados dois:
+- `frontend/Dockerfile`: constrói o app React com Vite e serve via Nginx.
+- `server/Dockerfile`: instala dependências Node e roda o `server.js`.
+`docker-compose.yml`
+Organiza os contêineres `frontend`, `backend` e `db`, cria a rede interna `sudoku-net` e define volumes e variáveis de ambiente para integração.
+
+**Exemplo de .dockerignore**
+```json
+# Dependências
+node_modules
+dist
+```
+
+**Tecnologias Utilizadas**
+- React + Vite
+- Node.js + Express
+- Sequelize ORM
+- PostgreSQL
+- Docker + Docker Compose
+- Nginx (para servir a aplicação React)
+
 
 ## Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
