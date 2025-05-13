@@ -51,7 +51,7 @@ Importante: Essas migrations só precisam ser executadas uma vez para criar as t
 - Backend (API): http://localhost:5000
 
 **:file_folder: Estrutura do Projeto**
-```json
+```bash
 Sudoku/
 ├── frontend/        # React + Vite
 │   ├── src/
@@ -73,7 +73,7 @@ Sudoku/
 
 **:hammer: Variáveis de Ambiente**
 `frontend/.env`
-```json
+```bash
 VITE_API_URL=http://localhost:5000
 ```
 
@@ -86,7 +86,7 @@ Define como cada imagem do contêiner será montada. Foram utilizados dois:
 Organiza os contêineres `frontend`, `backend` e `db`, cria a rede interna `sudoku-net` e define volumes e variáveis de ambiente para integração.
 
 **Exemplo de .dockerignore**
-```json
+```bash
 # Dependências
 node_modules
 dist
