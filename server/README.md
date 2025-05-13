@@ -33,7 +33,8 @@ cd sudoku-app
 
 4. **Execute o Docker Compose**
 ```bash
-docker-compose up --build
+docker-compose build --no-cache
+docker-compose up
 ```
 
 5. **Rode as migrations do Sequelize (apenas na primeira execução)**
