@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const publicKey = fs.readFileSync("../keys/private.key", "utf8");
+const publicKey = fs.readFileSync("keys/public.key", "utf8");
 
 const authenticate = (req, res, next) => {
   const token = req.header('Authorization').replace('Bearer ', '');
