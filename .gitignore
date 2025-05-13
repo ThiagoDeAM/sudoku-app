@@ -7,16 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Diretórios gerados
 node_modules
 dist
 dist-ssr
 *.local
 
-# Ignorar arquivos de configuração
-config.json
-keys/
+# Configurações e credenciais sensíveis
+.env
+.env.local
+server/keys/
+*.key
+*.pem
 
-# Editor directories and files
+# IDEs / editores
 .vscode/*
 !.vscode/extensions.json
 .idea
