@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "sudoku",
+    "host": "db",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "thiago160103",
+    "database": "sudoku_db_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "thiago160103",
+    "database": "sudoku_db_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
