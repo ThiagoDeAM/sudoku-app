@@ -36,7 +36,7 @@ cd sudoku-app
 docker-compose up --build
 ```
 
-4. **Rode as migrations do Sequelize (apenas na primeira execução)**
+5. **Rode as migrations do Sequelize (apenas na primeira execução)**
 ```bash
 docker-compose exec backend sh
 ln -s src/config config
@@ -46,7 +46,7 @@ npx sequelize-cli db:migrate
 
 Importante: Essas migrations só precisam ser executadas uma vez para criar as tabelas no banco de dados.
 
-5. **Acesse no navegador:**
+6. **Acesse no navegador:**
 - Frontend (React): http://localhost:3000
 - Backend (API): http://localhost:5000
 
