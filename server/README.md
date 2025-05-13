@@ -15,8 +15,8 @@ cd sudoku-app
 ```
 
 2. **Crie os arquivos de chave JWT (se ainda não existirem)**
-- Crie a pasta server/keys/
-- Coloque private.key e public.key dentro dessa pasta
+- Crie a pasta `server/keys/`
+- Coloque `private.key` e `public.key` dentro dessa pasta
 
 3. **Configure o arquivo `config.json` com suas credenciais de banco de dados.**
 ```json
